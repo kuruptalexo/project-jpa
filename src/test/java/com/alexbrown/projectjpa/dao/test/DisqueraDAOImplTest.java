@@ -3,6 +3,7 @@
  */
 package com.alexbrown.projectjpa.dao.test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -83,7 +84,28 @@ class DisqueraDAOImplTest {
 	void testConsultarById() {
 		Disquera disquera = this.disqueraDAO.consultarById(10L);
 		
+		assertNotNull(disquera);
+		
 		System.out.println("Disquera: " + disquera.getDescripcion());
+	}
+	
+	@Test
+	void testConsultarByDescripcionJPQL() {
+	
+		Disquera disqueraConsultada = this.disqueraDAO.consultarByDescripcionJPQL("Elektrik");
+		
+		assertNotNull(disqueraConsultada);
+		
+		System.out.println("Disquera by descripción: " + disqueraConsultada);
+	}
+	
+	@Test
+	void testConsultarByDescripcionNative() {
+		Disquera disqueraConsultada = this.disqueraDAO.consultarByDescripcionNative("Elektrik");
+		
+		assertNotNull(disqueraConsultada);
+		
+		System.out.println("Disquera by descripción: " + disqueraConsultada);
 	}
 
 }

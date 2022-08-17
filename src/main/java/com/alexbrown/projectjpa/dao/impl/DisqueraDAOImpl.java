@@ -15,7 +15,6 @@ import javax.persistence.TypedQuery;
 import com.alexbrown.projectjpa.dao.DisqueraDAO;
 import com.alexbrown.projectjpa.entity.Disquera;
 
-
 /**
  * @author DevPredator Clase que implementa las transacciones para la tabla de
  *         Disquera.
@@ -113,6 +112,29 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}
 		
 		return disqueraConsultado;
+	}
+
+	@Override
+	public Disquera consultarByDescripcionJPQL(String descripcion) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em.createQuery("FROM Disquera WHERE descripcion = :desc ");
+
+		queryDisquera.setParameter("desc", descripcion);
+
+		return queryDisquera.getSingleResult();
+	}
+
+	@Override
+	public Disquera consultarByDescripcionNative(String descripcion) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em.createNativeQuery("SELECT * FROM disquera WHERE descripcion = ?", Disquera.class);
+
+		queryDisquera.setParameter("desc", descripcion);
+
+		return queryDisquera.getSingleResult();
+		
 	}
 
 }
